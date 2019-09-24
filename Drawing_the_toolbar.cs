@@ -5,10 +5,13 @@ using System;
 public class Drawing_the_toolbar : MonoBehaviour
 {
     public Material toolbar_canvas;
+    bool start;
     // Start is called before the first frame update
     void Start()
     {
-        
+        start = false;
+        toolbar_canvas = GetComponent<Renderer>().material;
+        GL.Clear(false, true, Color.white, 0.0f);
     }
 
     // Update is called once per frame
@@ -20,8 +23,11 @@ public class Drawing_the_toolbar : MonoBehaviour
 
     void OnPostRender()
     {
-        toolbar_canvas = GetComponent<Renderer>().material;
-
+        if (start != true)
+        {
+            GL.Clear(false, true, Color.white, 0.0f);
+            start = true;
+        }
         GL.PushMatrix();
         toolbar_canvas.SetPass(0);
         GL.Begin(GL.LINE_STRIP);

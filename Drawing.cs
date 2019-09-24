@@ -6,14 +6,20 @@ public class Drawing : MonoBehaviour
 {
     
     public Material mat;
-    Vector3 Vertex_1, Vertex_2;       
-
+    Vector3 Vertex_1, Vertex_2;
+    Vector3 WorldPoint = new Vector3();
+    Vector3 work_ = new Vector3();
+    bool start;
     // Start is called before the first frame update
     void Start()
     {
+        start = false;
         Vertex_1 = new Vector3(0, 0, 0);
         Vertex_2 = new Vector3(0, 0, 0);
         mat = GetComponent<Renderer>().material;
+        
+        
+        
     }
 
     // Update is called once per frame
@@ -22,42 +28,29 @@ public class Drawing : MonoBehaviour
         
         if (Input.GetMouseButton(0))
         {
-            Vector3 WorldPoint = new Vector3();
-            Vector3 work_ = new Vector3();
-            WorldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+            float help_x = Camera.main.pixelWidth;
+            float help_y = Camera.main.pixelHeight;
+            WorldPoint = Camera.main.ScreenToWorldPoint(new Vector3((Input.mousePosition.x - help_x), (Input.mousePosition.y - help_y), Camera.main.nearClipPlane));
             work_ = new Vector3(Input.mousePosition.x, Input.mousePosition.y,0f);
             Vertex_1 = WorldPoint;
             Debug.Log("and point" + WorldPoint.x + " and y:" + WorldPoint.y);
+            
 
-            Draw_a_circle(10, Color.black, work_);
+
         }
        
     }
     void OnPostRender()
     {
-
-        GL.PushMatrix();
-        //GL.Viewport(new Rect(.5f, 0, 1, 1));
-        mat.SetPass(0);
-
-        GL.Begin(GL.QUADS);
-        GL.Color(new Color(0, 0, 1f));
-        GL.Vertex3(0, 5f, 0);
-        GL.Color(new Color(0.25f, 0, 0.75f));
-        GL.Vertex3(5f, 10, 0);
-        GL.Color(new Color(0.50f, 0, .50f));
-        GL.Vertex3(10, 5f, 0);
-        GL.Color(new Color(0.75f, 0, .25f));
-        GL.Vertex3(5f, 0, 0);
-        GL.End();
-               
-        GL.PopMatrix();        
-        
+        if (start !=true) {
+            GL.Clear(false, true, Color.white, 0.0f);
+            start = true;
+        }
+        Draw_a_square(50, Color.black, WorldPoint);
     }
 
     void Draw_a_circle(int radis, Color new_color, Vector3 center)
     {
-        Debug.Log("Draw_a_circle");
         int check = 0;
         GL.PushMatrix();
 
