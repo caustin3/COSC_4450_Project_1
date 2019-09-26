@@ -28,12 +28,14 @@ public class Drawing_the_toolbar : MonoBehaviour
             GL.Clear(false, true, Color.white, 0.0f);
             start = true;
         }
+         toolbar_canvas = GetComponent<Renderer>().material;
+
         GL.PushMatrix();
         toolbar_canvas.SetPass(0);
         GL.Begin(GL.LINE_STRIP);
         GL.Color(Color.black);
-        GL.Vertex3(30, -100, 0);
-        GL.Vertex3(30, 100, 0);       
+        GL.Vertex3(42.5f, -100, 0);
+        GL.Vertex3(42.5f, 100, 0);       
         GL.End();
         GL.PopMatrix();
 
@@ -67,17 +69,14 @@ public class Drawing_the_toolbar : MonoBehaviour
         GL.End();
         GL.PopMatrix();
 
-        GL.PushMatrix();
-        toolbar_canvas.SetPass(0);
-        GL.Begin(GL.LINE_STRIP);
-        GL.Color(Color.black);
-        GL.Vertex3(-33,-15 , 0);
-        GL.Vertex3(-23,-15 , 0);
-        GL.Vertex3(-23,-25 , 0);
-        GL.Vertex3(-33,-25 , 0);
-        GL.Vertex3(-33, -15, 0);
-        GL.End();
-        GL.PopMatrix();
+        Draw_a_circle(5, Color.black, new Vector3(-33, -33, 0));
+        Draw_a_circle(4, Color.white, new Vector3(-33, -33, 0));
+
+        Draw_a_circle(6, Color.black, new Vector3(-13, -33, 0));
+        Draw_a_circle(5, Color.white, new Vector3(-13, -33, 0));
+
+        Draw_a_circle(7, Color.black, new Vector3(7, -33, 0));
+        Draw_a_circle(6, Color.white, new Vector3(7, -33, 0));
     }
 
     void Draw_a_circle(int radis,Color new_color, Vector3 center)
